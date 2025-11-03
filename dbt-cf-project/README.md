@@ -1,4 +1,4 @@
-## Repo donde aprendo a usar dbt + Snowflake adpater
+## Repo donde aprendo a usar dbt + Snowflake adapter
 
 Welcome to your new dbt project!
 
