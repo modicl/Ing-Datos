@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: resenas
+    description: "Modelo con reseñas de Cursos de CF"
+    columns:
+      - name: feedback_id
+      - name: course_id
+      - name: user_id
+      - name: rating
+      - name: comment
+      - name: created_at
+
