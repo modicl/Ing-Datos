@@ -10,4 +10,47 @@ models:
       - name: rating
       - name: comment
       - name: created_at
+  - name: cursos
+    description: "Modelo con Cursos de CF"
+    columns:
+      - name: course_id
+      - name: title
+      - name: difficulty
+      - name: release_date
+
+  - name: usuarios
+    description: "Modelo con usuarios de Cursos de CF"
+    columns:
+      - name: user_id
+      - name: first_name
+      - name: last_name
+      - name: email
+      - name: signup_date
+      - name: username
+      - name: suscription_type
+
+
+  - name: inscripciones
+    description: "Modelo con inscripciones de Cursos de CF"
+    columns:
+      - name: enrollment_id
+        description: "ID de inscripción"
+        type: varchar
+        tests:
+          - not_null
+      - name: course_id
+        description: "ID del curso"
+        type: varchar
+        tests:
+          - not_null
+      - name: user_id
+        description: "ID del usuario"
+        type: varchar
+        tests:
+          - not_null
+      - name: enrollment_date
+        description: "Fecha de inscripción"
+        type: date
+        tests:
+          - not_null
 

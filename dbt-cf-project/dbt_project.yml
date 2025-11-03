@@ -36,5 +36,18 @@ models:
       +materialized: view
       +database: source
       +schema: public
+    procesado:
+      +materialized: table
+      +database: source
+      +schema: processed
+      +tags:
+        - codigo_facilito
+    sources:
+      +schema: src
+      +tags:
+        - codigo_facilito
+        - sources
+
+      
       
       
