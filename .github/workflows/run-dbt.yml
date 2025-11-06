@@ -1,3 +1,4 @@
+# filepath: c:\Users\Villa\Documents\Clases\Ing-Datos\.github\workflows\run-dbt.yml
 name: Ejecuta dbt
 
 on:
@@ -15,6 +16,15 @@ jobs:
           python-version: "3.10"
           cache: "pip" # caching pip dependencies
       - run: cd dbt-cf-project && pip install -r requirements.txt
+      # Nuevo paso: Validar que los secrets estén definidos
+      - name: Validar secrets de Snowflake
+        run: |
+          if [ -z "${{ secrets.SNOWFLAKE_ACCOUNT }}" ]; then echo "Error: SNOWFLAKE_ACCOUNT no está definido"; exit 1; fi
+          if [ -z "${{ secrets.SNOWFLAKE_USER }}" ]; then echo "Error: SNOWFLAKE_USER no está definido"; exit 1; fi
+          if [ -z "${{ secrets.SNOWFLAKE_PASSWORD }}" ]; then echo "Error: SNOWFLAKE_PASSWORD no está definido"; exit 1; fi
+          if [ -z "${{ secrets.SNOWFLAKE_DATABASE }}" ]; then echo "Error: SNOWFLAKE_DATABASE no está definido"; exit 1; fi
+          if [ -z "${{ secrets.SNOWFLAKE_SCHEMA }}" ]; then echo "Error: SNOWFLAKE_SCHEMA no está definido"; exit 1; fi
+          echo "Todos los secrets están definidos."
       # Nuevo paso: Crear directorio de perfiles y generar profiles.yml dinámicamente
       - run: mkdir -p ~/.dbt
       - run: |
@@ -29,8 +39,8 @@ jobs:
                 password: ${{ secrets.SNOWFLAKE_PASSWORD }}
                 database: ${{ secrets.SNOWFLAKE_DATABASE }}
                 schema: ${{ secrets.SNOWFLAKE_SCHEMA }}
-                warehouse: YOUR_WAREHOUSE  # Reemplaza con tu warehouse real en Snowflake
-                role: YOUR_ROLE  # Reemplaza con tu role real en Snowflake, o omite si no es necesario
+                warehouse: COMPUTE_WH
+                role: ACCOUNTADMIN
           EOF
       # Ejecutar dbt desde el directorio del proyecto
       - run: |
