@@ -1,56 +1,117 @@
 version: 2
 
 models:
-  - name: resenas
-    description: "Modelo con reseñas de Cursos de CF"
+  - name: reviews
+    description: "Modelo con reseñas de Cursos de Codigo Facilito"
     columns:
       - name: feedback_id
+        description: "ID de reseña"
+        tests:
+          - unique
+          - not_null
       - name: course_id
+        description: "ID de curso"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('cursos')
+                field: course_id
       - name: user_id
+        description: "ID de usuario"
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('usuarios')
+                field: user_id
       - name: rating
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5]
+                quote: false
       - name: comment
-      - name: created_at
+        tests:
+          - not_null
+
   - name: cursos
-    description: "Modelo con Cursos de CF"
+    description: "Modelo con cursos de Codigo Facilito"
     columns:
       - name: course_id
+        description: "ID de curso"
+        tests:
+          - not_null
       - name: title
+        tests:
+          - not_null
       - name: difficulty
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["beginner", "intermediate", "advanced"]
       - name: release_date
+        tests:
+          - not_null
 
   - name: usuarios
-    description: "Modelo con usuarios de Cursos de CF"
+    description: "Modelo con usuarios de Cursos de Codigo Facilito"
     columns:
       - name: user_id
+        description: "ID de usuario"
+        tests:
+          - not_null
       - name: first_name
+        description: "Nombre del usuario"
+        tests:
+          - not_null
       - name: last_name
+        description: "Apellidos del usuario"
+        tests:
+          - not_null
       - name: email
+        tests:
+          - not_null
       - name: signup_date
+        tests:
+          - not_null
       - name: username
-      - name: suscription_type
-
+        tests:
+          - not_null
+      - name: subscription_type
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["free", "premium", "premium-max"]
 
   - name: inscripciones
-    description: "Modelo con inscripciones de Cursos de CF"
+    description: "Modelo con inscripciones de Codigo Facilito"
     columns:
       - name: enrollment_id
-        description: "ID de inscripción"
-        type: varchar
+        description: "ID de inscripcion"
         tests:
+          - unique
           - not_null
       - name: course_id
-        description: "ID del curso"
-        type: varchar
+        description: "ID de curso"
         tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('cursos')
+                field: course_id
       - name: user_id
-        description: "ID del usuario"
-        type: varchar
+        description: "ID de usuario"
         tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('usuarios')
+                field: user_id
       - name: enrollment_date
-        description: "Fecha de inscripción"
-        type: date
+        description: "Fecha de inscripcion"
         tests:
           - not_null
-
