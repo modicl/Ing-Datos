@@ -14,6 +14,7 @@ jobs:
         with:
           python-version: "3.10"
           cache: "pip" # caching pip dependencies
+      - run: cd dbt-cf-project
       - run: pip install -r requirements.txt
       - run: | 
             dbt run -s "tag:codigo_facilito" -t prod
